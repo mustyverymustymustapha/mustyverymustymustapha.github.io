@@ -48,13 +48,13 @@ button:hover {
   font-weight: bold;
 }
 
-#favoritesList {
+#favoritesList, #customCombinationsList {
   list-style-type: none;
   padding: 0;
   text-align: left;
 }
 
-#favoritesList li {
+#favoritesList li, #customCombinationsList li {
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
@@ -110,4 +110,28 @@ button:hover {
 .sort-controls button {
   font-size: 0.9rem;
   padding: 0.3rem 0.7rem;
+}
+
+#customCombinations {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#customCombinations input {
+  width: 150px;
+  margin-right: 0.5rem;
+}
+
+#customCombinations button {
+  margin-top: 0.5rem;
+}
+
+#customCombinationsList li {
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
 }

@@ -138,5 +138,68 @@ function sortFavorites(criteria) {
     saveFavoritesToLocalStorage();
 }
 
-window.addEventListener('load', loadFavorites);
-window.addEventListener('beforeunload', saveFavoritesToLocalStorage);
+function addCustomCombination() {
+    const customMood = document.getElementById('customMood').value.trim();
+    const customTopping = document.getElementById('customTopping').value.trim();
+
+    if (customMood && customTopping) {
+        if (!moodToppings[customMood]) {
+            moodToppings[customMood] = [];
+        }
+        if (!moodToppings[customMood].includes(customTopping)) {
+            moodToppings[customMood].push(customTopping);
+        }
+
+        updateCustomCombinationsList();
+        saveCustomCombinationsToLocalStorage();
+
+        document.getElementById('customMood').value = '';
+        document.getElementById('customTopping').value = '';
+    }
+}
+
+function updateCustomCombinationsList() {
+    const customCombinationsList = document.getElementById('customCombinationsList');
+    customCombinationsList.innerHTML = '';
+
+    for (const [mood, toppings] of Object.entries(moodToppings)) {
+        toppings.forEach(topping => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <span>${mood}: ${topping}</span>
+                <button class="remove-btn" onclick="removeCustomCombination('${mood}', '${topping}')">Remove</button>
+            `;
+            customCombinationsList.appendChild(listItem);
+        });
+    }
+}
+
+function removeCustomCombination(mood, topping) {
+    moodToppings[mood] = moodToppings[mood].filter(t => t !== topping);
+    if (moodToppings[mood].length === 0) {
+        delete moodToppings[mood];
+    }
+    updateCustomCombinationsList();
+    saveCustomCombinationsToLocalStorage();
+}
+
+function saveCustomCombinationsToLocalStorage() {
+    localStorage.setItem('customMoodToppings', JSON.stringify(moodToppings));
+}
+
+function loadCustomCombinationsFromLocalStorage() {
+    const storedCombinations = localStorage.getItem('customMoodToppings');
+    if (storedCombinations) {
+        moodToppings = JSON.parse(storedCombinations);
+        updateCustomCombinationsList();
+    }
+}
+
+window.addEventListener('load', () => {
+    loadFavorites();
+    loadCustomCombinationsFromLocalStorage();
+});
+window.addEventListener('beforeunload', () => {
+    saveFavoritesToLocalStorage();
+    saveCustomCombinationsToLocalStorage();
+});
