@@ -38,11 +38,21 @@ function saveTopping() {
     if (currentTopping) {
         const favoritesList = document.getElementById('favoritesList');
         const listItem = document.createElement('li');
-        listItem.textContent = currentTopping;
+        listItem.innerHTML = `
+            ${currentTopping}
+            <button class="remove-btn" onclick="removeTopping(this)">Remove</button>
+        `;
         favoritesList.appendChild(listItem);
         currentTopping = '';
         document.getElementById('saveButton').style.display = 'none';
+        saveFavoritesToLocalStorage();
     }
+}
+
+function removeTopping(button) {
+    const listItem = button.parentElement;
+    listItem.remove();
+    saveFavoritesToLocalStorage();
 }
 
 function loadFavorites() {
@@ -50,14 +60,17 @@ function loadFavorites() {
     const favorites = JSON.parse(localStorage.getItem('favoriteToppings')) || [];
     favorites.forEach(topping => {
         const listItem = document.createElement('li');
-        listItem.textContent = topping;
+        listItem.innerHTML = `
+            ${topping}
+            <button class="remove-btn" onclick="removeTopping(this)">Remove</button>
+        `;
         favoritesList.appendChild(listItem);
     });
 }
 
 function saveFavoritesToLocalStorage() {
     const favoritesList = document.getElementById('favoritesList');
-    const favorites = Array.from(favoritesList.children).map(li => li.textContent);
+    const favorites = Array.from(favoritesList.children).map(li => li.firstChild.textContent.trim());
     localStorage.setItem('favoriteToppings', JSON.stringify(favorites));
 }
 
