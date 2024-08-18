@@ -117,5 +117,26 @@ function saveFavoritesToLocalStorage() {
     localStorage.setItem('favoriteToppings', JSON.stringify(favorites));
 }
 
+function sortFavorites(criteria) {
+    const favoritesList = document.getElementById('favoritesList');
+    const items = Array.from(favoritesList.children);
+
+    items.sort((a, b) => {
+        if (criteria === 'rating') {
+            const ratingA = parseInt(a.querySelector('.star-rating').getAttribute('data-rating'));
+            const ratingB = parseInt(b.querySelector('.star-rating').getAttribute('data-rating'));
+            return ratingB - ratingA;
+        } else if (criteria === 'name') {
+            const nameA = a.querySelector('span').textContent.toLowerCase();
+            const nameB = b.querySelector('span').textContent.toLowerCase();
+            return nameA.localeCompare(nameB);
+        }
+    });
+
+    favoritesList.innerHTML = '';
+    items.forEach(item => favoritesList.appendChild(item));
+    saveFavoritesToLocalStorage();
+}
+
 window.addEventListener('load', loadFavorites);
 window.addEventListener('beforeunload', saveFavoritesToLocalStorage);

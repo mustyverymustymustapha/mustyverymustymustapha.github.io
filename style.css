@@ -102,3 +102,12 @@ button:hover {
   position: absolute;
   color: #ffd700;
 }
+
+.sort-controls {
+  margin-bottom: 1rem;
+}
+
+.sort-controls button {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.7rem;
+}

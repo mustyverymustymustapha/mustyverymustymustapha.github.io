@@ -14,6 +14,10 @@
         <div id="result"></div>
         <button id="saveButton" onclick="saveTopping()" style="display:none;">Save Topping</button>
         <h2>Favorite Toppings</h2>
+        <div class="sort-controls">
+            <button onclick="sortFavorites('rating')">Sort by Rating</button>
+            <button onclick="sortFavorites('name')">Sort Alphabetically</button>
+        </div>
         <ul id="favoritesList"></ul>
     </div>
     <script src="script.js"></script>
