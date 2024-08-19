@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mood-Based Pizza Topping Generator</title>
+    <title>Mood-Based Pizza Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Mood-Based Pizza Topping Generator</h1>
+        <h1>Mood-Based Pizza Generator</h1>
         <input type="text" id="moodInput" placeholder="Enter your mood">
         <button onclick="generateTopping()">Get Topping</button>
+        <button onclick="generateFullPizza()">Generate Full Pizza</button>
         <div id="result"></div>
+        <div id="fullPizzaResult"></div>
         <button id="saveButton" onclick="saveTopping()" style="display:none;">Save Topping</button>
         <h2>Favorite Toppings</h2>
         <div class="sort-controls">

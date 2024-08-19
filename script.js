@@ -8,6 +8,8 @@ const moodToppings = {
     'adventurous': ['anchovies', 'arugula', 'prosciutto']
 };
 
+const crustTypes = ['Thin', 'Thick', 'Stuffed', 'Deep Dish', 'Neapolitan', 'New York Style', 'Sicilian'];
+
 let currentTopping = '';
 
 function generateTopping() {
@@ -32,6 +34,42 @@ function generateTopping() {
 
     resultDiv.textContent = `Based on your ${matchedMood} mood, we recommend: ${currentTopping}!`;
     saveButton.style.display = 'inline-block';
+}
+
+function generateFullPizza() {
+    const moodInput = document.getElementById('moodInput').value.toLowerCase();
+    const fullPizzaResultDiv = document.getElementById('fullPizzaResult');
+
+    if (moodInput.trim() === '') {
+        fullPizzaResultDiv.textContent = 'Please enter a mood!';
+        return;
+    }
+
+    let matchedMood = Object.keys(moodToppings).find(mood => moodInput.includes(mood));
+
+    if (!matchedMood) {
+        matchedMood = Object.keys(moodToppings)[Math.floor(Math.random() * Object.keys(moodToppings).length)];
+    }
+
+    const toppings = moodToppings[matchedMood];
+    const selectedToppings = [];
+    const numToppings = Math.floor(Math.random() * 3) + 2;
+
+    for (let i = 0; i < numToppings; i++) {
+        const topping = toppings[Math.floor(Math.random() * toppings.length)];
+        if (!selectedToppings.includes(topping)) {
+            selectedToppings.push(topping);
+        }
+    }
+
+    const crust = crustTypes[Math.floor(Math.random() * crustTypes.length)];
+
+    fullPizzaResultDiv.innerHTML = `
+        <h3>Your Mood-Based Pizza:</h3>
+        <p><strong>Crust:</strong> ${crust}</p>
+        <p><strong>Toppings:</strong> ${selectedToppings.join(', ')}</p>
+        <p>Enjoy your ${matchedMood} mood pizza!</p>
+    `;
 }
 
 function saveTopping() {
@@ -199,6 +237,7 @@ window.addEventListener('load', () => {
     loadFavorites();
     loadCustomCombinationsFromLocalStorage();
 });
+
 window.addEventListener('beforeunload', () => {
     saveFavoritesToLocalStorage();
     saveCustomCombinationsToLocalStorage();

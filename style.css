@@ -42,7 +42,7 @@ button:hover {
   background-color: #ff4500;
 }
 
-#result {
+#result, #fullPizzaResult {
   margin-top: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
@@ -134,4 +134,11 @@ button:hover {
   padding: 0.5rem;
   border-radius: 5px;
   margin-bottom: 0.5rem;
+}
+
+#fullPizzaResult {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
 }
