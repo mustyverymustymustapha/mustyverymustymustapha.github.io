@@ -48,13 +48,13 @@ button:hover {
   font-weight: bold;
 }
 
-#favoritesList, #customCombinationsList {
+#favoritesList, #customCombinationsList, #customPizzaList {
   list-style-type: none;
   padding: 0;
   text-align: left;
 }
 
-#favoritesList li, #customCombinationsList li {
+#favoritesList li, #customCombinationsList li, #customPizzaList li {
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
@@ -112,7 +112,7 @@ button:hover {
   padding: 0.3rem 0.7rem;
 }
 
-#customCombinations {
+#customCombinations, #customPizzaForm {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
@@ -120,16 +120,16 @@ button:hover {
   flex-wrap: wrap;
 }
 
-#customCombinations input {
+#customCombinations input, #customPizzaForm input {
   width: 150px;
   margin-right: 0.5rem;
 }
 
-#customCombinations button {
+#customCombinations button, #customPizzaForm button {
   margin-top: 0.5rem;
 }
 
-#customCombinationsList li {
+#customCombinationsList li, #customPizzaList li {
   background-color: #f0f0f0;
   padding: 0.5rem;
   border-radius: 5px;

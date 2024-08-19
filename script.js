@@ -11,6 +11,7 @@ const moodToppings = {
 const crustTypes = ['Thin', 'Thick', 'Stuffed', 'Deep Dish', 'Neapolitan', 'New York Style', 'Sicilian'];
 
 let currentTopping = '';
+let customPizzas = [];
 
 function generateTopping() {
     const moodInput = document.getElementById('moodInput').value.toLowerCase();
@@ -233,12 +234,63 @@ function loadCustomCombinationsFromLocalStorage() {
     }
 }
 
+function saveCustomPizza() {
+    const name = document.getElementById('pizzaName').value.trim();
+    const crust = document.getElementById('pizzaCrust').value.trim();
+    const toppings = document.getElementById('pizzaToppings').value.split(',').map(t => t.trim());
+
+    if (name && crust && toppings.length > 0) {
+        const newPizza = { name, crust, toppings };
+        customPizzas.push(newPizza);
+        updateCustomPizzaList();
+        saveCustomPizzasToLocalStorage();
+
+        document.getElementById('pizzaName').value = '';
+        document.getElementById('pizzaCrust').value = '';
+        document.getElementById('pizzaToppings').value = '';
+    }
+}
+
+function updateCustomPizzaList() {
+    const customPizzaList = document.getElementById('customPizzaList');
+    customPizzaList.innerHTML = '';
+
+    customPizzas.forEach((pizza, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <span><strong>${pizza.name}</strong> - ${pizza.crust} crust, Toppings: ${pizza.toppings.join(', ')}</span>
+            <button class="remove-btn" onclick="removeCustomPizza(${index})">Remove</button>
+        `;
+        customPizzaList.appendChild(listItem);
+    });
+}
+
+function removeCustomPizza(index) {
+    customPizzas.splice(index, 1);
+    updateCustomPizzaList();
+    saveCustomPizzasToLocalStorage();
+}
+
+function saveCustomPizzasToLocalStorage() {
+    localStorage.setItem('customPizzas', JSON.stringify(customPizzas));
+}
+
+function loadCustomPizzasFromLocalStorage() {
+    const storedPizzas = localStorage.getItem('customPizzas');
+    if (storedPizzas) {
+        customPizzas = JSON.parse(storedPizzas);
+        updateCustomPizzaList();
+    }
+}
+
 window.addEventListener('load', () => {
     loadFavorites();
     loadCustomCombinationsFromLocalStorage();
+    loadCustomPizzasFromLocalStorage();
 });
 
 window.addEventListener('beforeunload', () => {
     saveFavoritesToLocalStorage();
     saveCustomCombinationsToLocalStorage();
+    saveCustomPizzasToLocalStorage();
 });
